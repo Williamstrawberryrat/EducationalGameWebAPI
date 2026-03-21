@@ -3,7 +3,7 @@ package com.example.model;
 public class Question implements java.io.Serializable , Comparable<Question> , Cloneable{
     public String questionText;
     public String[] options;
-    public String answer;
+    private String answer;
     public Subject subject;
 
     public Question(String questionText, String[] options, String answer, Subject subject) {
@@ -30,6 +30,10 @@ public class Question implements java.io.Serializable , Comparable<Question> , C
     @Override
     public int hashCode() {
         return questionText.hashCode() ^ answer.hashCode() ^ subject.hashCode();
+    }
+
+    public boolean checkAnswer(String userAnswer) {
+        return answer.equals(userAnswer);
     }
 
     @Override
