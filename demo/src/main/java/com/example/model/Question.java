@@ -33,13 +33,14 @@ public class Question implements java.io.Serializable , Comparable<Question> , C
     }
 
     public boolean checkAnswer(String userAnswer) {
+        if (userAnswer == null || userAnswer.isEmpty()) {
+            throw new IllegalArgumentException("User answer is of an invalid format.");
+        }
         return answer.equals(userAnswer);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this.hashCode() == obj.hashCode())
-            return true;
         if (obj == null || getClass() != obj.getClass())
             return false;
 
