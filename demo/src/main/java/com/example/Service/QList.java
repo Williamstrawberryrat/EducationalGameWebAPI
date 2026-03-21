@@ -1,20 +1,22 @@
 package com.example.Service;
 
-import com.example.model.Question;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import com.example.model.Question;
+
 public class QList<T extends Question> implements List<T> {
     private T[] questions;
     private final Class<T> type;
     private int size;
 
+    @SuppressWarnings("unchecked")
     public QList() {
         this.questions = (T[]) new Question[10];
-        type = (Class<T>) (Class<? extends Question>) Question.class;
+        type = (Class<T>) questions.getClass().getComponentType();
         this.size = 0;
     }
 
@@ -409,9 +411,13 @@ public class QList<T extends Question> implements List<T> {
         return sublist;
     }
 
+    @SuppressWarnings("unchecked")
     private void resize() {
         T[] arr = (T[]) new Question[questions.length * 2];
-        System.arraycopy(questions, 0, arr, 0, questions.length);
+        int index = 0;
+        for (T question : questions) {
+            arr[index++] = question;
+        }
         questions = arr;
     }
 
